@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message ObuData {
+    string obuid = 1;
+    float lat = 2;
+    float long = 3;
+    float distance = 4;
+}
+
+service ObuService {
+    rpc StoreDataInPostgres (ObuData) returns (Empty) {}
+}
+
+message Empty {}

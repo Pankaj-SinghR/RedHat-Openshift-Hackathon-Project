@@ -1,0 +1,27 @@
+{
+    "name": "toll-microservice",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start:obu": "node obu/obu.mjs",
+        "start:receiver": "node receiver/receiver.mjs",
+        "start:discalc": "node distance_calculator/main.mjs",
+        "start:kafka": "sudo docker-compose up -d",
+        "stop:kafka": "sudo docker-compose down"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@prisma/client": "^5.5.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "kafkajs": "^2.2.4",
+        "prisma": "^5.5.2",
+        "uuid": "^9.0.1",
+        "winston": "^3.11.0",
+        "ws": "^8.14.2"
+    }
+}
