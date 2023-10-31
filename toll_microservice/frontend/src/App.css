@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+}
+
+body {
+  padding: 20px;
+}
+
+.css-ptiqhd-MuiSvgIcon-root {
+  display: none !important;
+}
+
+.MuiDataGrid-row:hover {
+  cursor: pointer;
+}
+
+.css-kzyyzb-MuiDataGrid-root .MuiDataGrid-columnSeparator {
+  display: none !important;
+}
+
+.css-t89xny-MuiDataGrid-columnHeaderTitle {
+  font-weight: 900 !important;
+}
+
+.css-1iyq7zh-MuiDataGrid-columnHeaders {
+  background-color: #8e8ffa;
+}
