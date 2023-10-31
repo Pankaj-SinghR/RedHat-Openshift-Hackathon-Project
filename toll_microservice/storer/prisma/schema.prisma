@@ -13,8 +13,10 @@ datasource db {
 
 model obu_invoice {
     obu_id         String @id
-    lat            Float
-    long           Float
+    start_lat      Float
+    start_long     Float
+    dest_lat       Float
+    dest_long      Float
     total_distance Float
     total_price    Float
     created_at     Int

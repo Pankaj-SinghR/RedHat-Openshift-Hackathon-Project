@@ -25,8 +25,10 @@ async function dataStore({ obuid, lat, long, distance, price }) {
             const data = await prisma.obu_invoice.create({
                 data: {
                     obu_id: obuid,
-                    lat: lat,
-                    long: long,
+                    start_lat: lat,
+                    start_long: long,
+                    dest_lat: 0.0,
+                    dest_long: 0.0,
                     total_distance: distance,
                     total_price: price,
                     created_at: new Date().getTime() / 1000,
@@ -42,8 +44,8 @@ async function dataStore({ obuid, lat, long, distance, price }) {
                     obu_id: obuid
                 },
                 data: {
-                    lat: lat,
-                    long: long,
+                    dest_lat: lat,
+                    dest_long: long,
                     total_distance: distance + total_distance,
                     total_price: price + total_price,
                     updated_at: new Date().getTime() / 1000
