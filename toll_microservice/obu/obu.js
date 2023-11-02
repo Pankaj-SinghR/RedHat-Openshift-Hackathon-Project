@@ -6,7 +6,7 @@ let ws;
 let isConnected = false;
 
 function main() {
-    let obuIDS = generateOBUIDS(20);
+    let obuIDS = generateOBUIDS(50);
 
     ws = new WebSocket(URL);
 
@@ -45,7 +45,7 @@ async function sendLoop(obuIDS) {
                 console.log(JSON.stringify(data));
             }
         }
-        await sleep(5000);
+        await sleep(2000);
     }
 }
 
