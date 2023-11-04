@@ -1,0 +1,65 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap"); */
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  /* font-family: "Inter", sans-serif; */
+  font-size: 18px;
+}
+
+body {
+  padding: 20px;
+}
+
+.css-ptiqhd-MuiSvgIcon-root {
+  display: none !important;
+}
+
+.MuiDataGrid-row:hover {
+  cursor: pointer;
+}
+
+.css-kzyyzb-MuiDataGrid-root .MuiDataGrid-columnSeparator {
+  display: none !important;
+}
+
+.css-t89xny-MuiDataGrid-columnHeaderTitle {
+  font-weight: 900 !important;
+}
+
+.css-1iyq7zh-MuiDataGrid-columnHeaders {
+  background-color: #1976d2;
+}
+
+.css-de9k3v-MuiDataGrid-selectedRowCount {
+  display: none !important;
+}
+
+.css-rtrcn9-MuiTablePagination-root .MuiTablePagination-selectLabel {
+  display: none !important;
+}
+
+.css-rtrcn9-MuiTablePagination-root .MuiTablePagination-input {
+  display: none !important;
+}
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+  font-size: 25px !important;
+  font-weight: 800 !important;
+}
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  font-size: 20px;
+}
+
+.parent {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  max-width: 880px !important;
+}
