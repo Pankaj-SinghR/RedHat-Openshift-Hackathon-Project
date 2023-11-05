@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receiver
+spec:
+  replicas: 1  # You can adjust this based on your needs
+  selector:
+    matchLabels:
+      app: receiver
+  template:
+    metadata:
+      labels:
+        app: receiver
+    spec:
+      containers:
+      - name: receiver
+        image: {{ .Values.receiver.image }}
+        ports:
+          - containerPort: {{ .Values.receiver.port }}
+        env:
+          - name: KAFKA_CLIENT_ID
+            value: {{ .Values.receiver.environment.KAFKA_CLIENT_ID }}
+          - name: KAFKA_BROKERS
+            value: {{ .Values.receiver.environment.KAFKA_BROKERS }} 
+          - name: KAFKA_TOPIC
+            value: {{ .Values.receiver.environment.KAFKA_TOPIC }}
+          - name: WS_PORT
+            value: "{{ .Values.receiver.port }}"
+        
