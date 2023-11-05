@@ -5,7 +5,7 @@ const router = require("./router.js");
 const logger = require("./logger.js")
 
 const app = express();
-const PORT = 443
+const PORT = 80
 const httpServer = http.createServer(app);
 
 app.use((req, res, next) => {
