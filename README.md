@@ -6,6 +6,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## Project Overview & Architecture
+
 The **Toll Microservice** is a comprehensive solution designed to efficiently manage and calculate toll costs for vehicles equipped with **On-Board Units (OBU)** while providing **real-time tracking of their positions and toll expenses**. This microservice system streamlines the process from OBU data collection to toll calculation and presentation through a user-friendly interface.
 
 1. **OBU Receiver Server**:
@@ -27,7 +28,9 @@ The **Toll Microservice** is a comprehensive solution designed to efficiently ma
 5. **Gateway Microservice**:
    - Offers a user-friendly interface and APIs for tracking OBU devices, viewing locations, distances, and toll costs.
    - **Tools & Technology**: Custom serverless microservice, Knative, React JS
+
 ---
+
 ```mermaid
 stateDiagram
     OBUDevice1 --> OBUReceiver: (lat, long, obuId)
@@ -46,8 +49,11 @@ stateDiagram
     User --> Serverless_Backend_and_UI(gateway)
     Serverless_Backend_and_UI(gateway) --> User
 ```
+
 ---
+
 ## Problem we tried to solve
+
 1. **Automated Toll Calculation**: The system automates the calculation of toll costs based on the distance covered by vehicles. This eliminates manual toll calculations, reducing the risk of errors and ensuring accurate billing.
 2. **Real-time Tracking**: The microservice allows for real-time tracking of OBU-equipped vehicles, providing location updates and toll costs to users. This ensures transparency and improves fleet management.
 3. **Scalability**: The use of serverless architecture with Knative for the Gateway Microservice ensures that the system can easily scale to handle a large number of OBU devices without the need for manual intervention.
@@ -55,10 +61,15 @@ stateDiagram
 5. **User-Friendly Interface and Open API's**: The Gateway Microservice provides a user interface and APIs that allow users to view OBU device locations, distances traveled, and toll costs in a simple and intuitive manner.
 
 ---
+
 ## Instructions for Deployment of microservice
+
 ### Prerequisite
+
 1. ##### Should have redhat developer account for openshift
+
 2. ##### Should have following tools installed in local machine
+
    - **oc cli** (openshift command line interface) to interact with openshift cluster.  [Install oc CLI](https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html)
    - **helm cli** to deploy all microservice using helm chart.  [Install helm](https://helm.sh/docs/intro/install/)
    - **docker and docker-compose** (if wants to run all microservice in local environment only)
@@ -69,32 +80,38 @@ stateDiagram
 To set up the Toll Microservice project, follow these steps:
 
 1. **Login to openshift cluster using oc cli `use any method you like to login`**
+
    ```bash
    oc login --token=<REPLACE WITH YOUR TOKEN> --server=<REPLACE WITH YOUR OPENSHIFT CLUSTER URL>
    ```
 
 2. **Create a postgresql pod in the openshift cluster using `oc new-app` command (recommended : let password be mypassword)**
+
    ```
    oc new-app --name=postgresql -e POSTGRESQL_ADMIN_PASSWORD=mypassword postgresql:10-el8
    ```
 
    `check if postgres pod running or not`
-   
+
       ```
       oc get pods
       ```
-      
+
 - **output**
+
    ```
    NAME                         READY   STATUS    RESTARTS   AGE
    postgresql-5ddb5fcc8-zsjgm   1/1     Running   0          26s
    ```
 
 3. **Clone the repository and list the directory.**
+
    ```
    git clone https://github.com/Pankaj-SinghR/RedHat-Openshift-Hackathon-Project && cd RedHat-Openshift-Hackathon-Project && ls -l
    ```
+
 - **output**
+
    ```bash
    total 12
    -rwxrwxrwx 1 dev dev 1069 Nov  6 22:08 LICENSE
@@ -102,25 +119,31 @@ To set up the Toll Microservice project, follow these steps:
    drwxrwxrwx 1 dev dev 4096 Nov  6 22:08 helm
    drwxrwxrwx 1 dev dev 4096 Nov  6 22:08 toll_microservice
    ```
+
    **Note**
    `helm directory contains all the yaml file for deployment, service, routes and knative service with their values.yml file and toll_microservice contains all the microservice with their respective code`
-   
+
    `All the images used for deployment of each microservice has already been build and pushed to quay.io image registry`
-   
-   - [OBU Receiver Registry](https://quay.io/repository/coder_bhai/receiver)
-   - [Distance Calculator Registry](https://quay.io/repository/coder_bhai/distance_calculator)
-   - [Storer Registry](https://quay.io/repository/coder_bhai/storer)
-   - [API Gateway Registry](https://quay.io/repository/coder_bhai/gateway)
+
+  - [OBU Receiver Registry](https://quay.io/repository/coder_bhai/receiver)
+  - [Distance Calculator Registry](https://quay.io/repository/coder_bhai/distance_calculator)
+  - [Storer Registry](https://quay.io/repository/coder_bhai/storer)
+  - [API Gateway Registry](https://quay.io/repository/coder_bhai/gateway)
 
 4. **Deploy all microservice using `helm install` command**
+
    ```
    helm install toll-microservice helm/helm 
    ```
+
 5. **Check all the pods, routes and knative serverless microservices**
+
    ```
    oc get pods
    ```
+
 - **output** Hurray, all microservice got successfully deployed
+
    ```bash
       NAME                                        READY   STATUS    RESTARTS   AGE
       distance-calculator-54d78cb6d-p78g6         1/1     Running   0          43s
@@ -132,49 +155,69 @@ To set up the Toll Microservice project, follow these steps:
       zookeeper-5d7d58dd6f-zx7kf                  1/1     Running   0          43s
    ```
 
+---
+
+###### Screenshot of deployed microservice in openshift cluster
+
+![microservice-graph](./screenshots/toll_microservice.png)
+
    ```
    oc get routes
    ```
+
 - **output**
 
   `receiver-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com is route exposes by OBU receiver microservice for OBU devices to connect and send data`
+
    ```bash
    NAME                   HOST/PORT                                                                       PATH   SERVICES               PORT          TERMINATION          WILDCARD
    primer-export-primer   primer-export-primer-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com          primer-export-primer   oauth-proxy   reencrypt/Redirect   None
    receiver               receiver-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com                      receiver               8080                               None
    ```
-   
+
    ```
    oc get ksvc
    ```
+
 - **output**
  `https://gateway-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com is serverless microservice URL using knative exposing UI and backend api to internet. Hit the URL and you'll get UI to interact`
  `Try accessing /invoice/api/v1/obu to get all OBU data or /invoice/api/v1/obu/:OBUId to get only a particular obu data (replace OBUId with some OBU Id you interested in.)`
+
    ```bash
    NAME      URL                                                                        LATESTCREATED   LATESTREADY     READY   REASON
    gateway   https://gateway-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com   gateway-00001   gateway-00001   True
    ```
 
 6. **Try publishing data to OBU Server**
+
 - **Move to obu directory in toll_microservice**
+
    ```
     cd toll_microservice/obu && ls -l
    ```
-   - **output**
+
+  - **output**
+
    ```bash
    -rwxrwxrwx 1 pankaj pankaj  1720 Nov  6 20:02 obu.js
    -rwxrwxrwx 1 pankaj pankaj   245 Nov  6 18:38 package.json
    ```
+
 - **Install dependencies**
+
    ```
     npm i
    ```
+
 - **send data to obu receiver microservice** `replace <EXPOSED ROUTE> with the url you got for exposing your OBU receiver microservice in my case it's receiver-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com`
+
    ```
     node obu.js --url ws://<EXPOSED ROUTE>:8080/ws --obu 10 
    ```
-   - **output**
+
+  - **output**
    `This will generate multiple OBU Devices and send their latitude and longitude in interval of 5sec. Otherside, you can check in UI or check in api`
+
    ```bash
    Connected to OBU server
    {"OBUId":"7afb8146-7b74-4828-a4c3-a38f73067bbe","Lat":25.336789323582625,"Long":69.65622209979807}
@@ -189,20 +232,36 @@ To set up the Toll Microservice project, follow these steps:
    {"OBUId":"b4ca33c4-6a9b-466b-ad6b-b7c589b26e67","Lat":19.874382473923212,"Long":45.878200293193544}
    ```
 
+#### Screenshot of simple UI
+
+![simple ui](./screenshots/simple_ui.png)
+
+#### Screenshot of public api
+
+![simple ui](./screenshots/obu.png)
+
 ## Setting up the Project in local environment using docker-compose
+
 1. **Clone the repository and list the directory.**
+
    ```
    git clone https://github.com/Pankaj-SinghR/RedHat-Openshift-Hackathon-Project && cd RedHat-Openshift-Hackathon-Project && ls -l
    ```
+
 2. **Change directory to toll_microservice.**
+
    ```
    cd toll_microservice
    ```
+
 3. **use docker-compose command to bulid and run all microservice**
+
    ```
    docker-compose up --build -d
    ```
+
    - **output**
+
    ```bash
       Creating toll_microservice_gateway_1   ... done
       Creating toll_microservice_gateway_1             ... done
@@ -211,7 +270,9 @@ To set up the Toll Microservice project, follow these steps:
       Creating toll_microservice_distance_calculator_1 ... done
       Creating toll_microservice_receiver_1            ... done
    ```
+
 4. **use step 6 of helm deployment to publish data to localhost:8080 OBU receiver**
+
    ```
    node obu.js
    ```
