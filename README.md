@@ -202,10 +202,6 @@ To set up the Toll Microservice project, follow these steps:
    ```
    docker-compose up --build -d
    ```
-4. **use docker-compose command to bulid and run**
-   ```
-   docker-compose up --build -d
-   ```
    - **output**
    ```bash
       Creating toll_microservice_gateway_1   ... done
@@ -215,7 +211,7 @@ To set up the Toll Microservice project, follow these steps:
       Creating toll_microservice_distance_calculator_1 ... done
       Creating toll_microservice_receiver_1            ... done
    ```
-5. **use step 6 of helm deployment to publish data to localhost:8080 OBU receiver**
+4. **use step 6 of helm deployment to publish data to localhost:8080 OBU receiver**
    ```
    node obu.js
    ```
