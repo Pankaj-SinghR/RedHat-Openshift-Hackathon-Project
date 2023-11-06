@@ -12,3 +12,11 @@ spec:
           env:
             - name: DATABASE_URL
               value: postgresql://postgres:mypassword@postgresql:5432/openshiftdb
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
