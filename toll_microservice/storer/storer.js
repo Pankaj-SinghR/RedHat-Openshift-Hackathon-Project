@@ -43,7 +43,7 @@ server.addService(obuProto.ObuService.service, {
 });
 
 server.bindAsync(
-    `${GRPC_HOST}:${GRPC_PORT}`,
+    `${GRPC_PORT}`,
     grpc.ServerCredentials.createInsecure(),
     (error, port) => {
         if (error) {
