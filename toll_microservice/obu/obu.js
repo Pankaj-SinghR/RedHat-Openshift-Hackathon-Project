@@ -6,7 +6,7 @@ let ws;
 let isConnected = false;
 
 function main() {
-    let obuIDS = generateOBUIDS(1);
+    let obuIDS = generateOBUIDS(20);
 
     ws = new WebSocket(URL);
 
