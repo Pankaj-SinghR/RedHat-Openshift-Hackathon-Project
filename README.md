@@ -28,6 +28,8 @@ The **Toll Microservice** is a comprehensive solution designed to efficiently ma
    - Offers a user-friendly interface and APIs for tracking OBU devices, viewing locations, distances, and toll costs.
    - **Tools & Technology**: Custom serverless microservice, Knative, React JS
 
+
+
 ```mermaid
 stateDiagram
     OBUDevice1 --> OBUReceiver: (lat, long, obuId)
@@ -46,6 +48,8 @@ stateDiagram
     User --> Serverless_Backend_and_UI(gateway)
     Serverless_Backend_and_UI(gateway) --> User
 ```
+
+
    
 ## Problem Solving
 1. **Automated Toll Calculation**: The system automates the calculation of toll costs based on the distance covered by vehicles. This eliminates manual toll calculations, reducing the risk of errors and ensuring accurate billing.
