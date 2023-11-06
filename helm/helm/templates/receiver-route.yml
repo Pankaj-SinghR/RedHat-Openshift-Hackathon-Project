@@ -7,5 +7,4 @@ spec:
     kind: Service
     name: receiver
   port:
-    targetPort: 8080
-  websocket: true  
+    targetPort: "{{ .Values.receiver.port }}"
