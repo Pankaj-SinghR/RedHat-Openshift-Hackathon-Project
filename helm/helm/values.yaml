@@ -20,3 +20,19 @@ receiver:
     KAFKA_CLIENT_ID: obu-producer
     KAFKA_BROKERS: kafka:9092
     KAFKA_TOPIC: obu-topic
+
+postgres:
+  URL: postgresql://postgres:mypassword@postgresql:5432/openshiftdb
+
+storer:
+  image: quay.io/coder_bhai/storer:latest
+  GRPC_PORT: 50051
+  GRPC_HOST: storer
+
+gateway:
+  image: quay.io/coder_bhai/gateway:latest
+  PORT: 8080
+
+distanceCalculator:
+  image: quay.io/coder_bhai/distance_calculator
+  

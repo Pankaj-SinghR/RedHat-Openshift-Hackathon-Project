@@ -14,16 +14,16 @@ spec:
     spec:
       containers:
       - name: storer
-        image: quay.io/coder_bhai/storer
+        image: {{ .Values.storer.image }}
         env:
           - name: DATABASE_URL
-            value: postgresql://postgres:mypassword@postgresql:5432/openshiftdb
+            value: {{ .Values.postgres.URL }}
           - name: GRPC_HOST
-            value: storer
+            value: {{ .Values.storer.GRPC_HOST }}
           - name: GRPC_PORT
-            value: "50051"
+            value: "{{ .Values.storer.GRPC_PORT }}"
         ports:
-        - containerPort: 50051
+        - containerPort: {{ .Values.storer.GRPC_PORT }}
 
 ---
 apiVersion: v1
@@ -35,5 +35,5 @@ spec:
     app: storer
   ports:
     - protocol: TCP
-      port: 50051
-      targetPort: 50051
+      port: {{ .Values.storer.GRPC_PORT }}
+      targetPort: {{ .Values.storer.GRPC_PORT }}

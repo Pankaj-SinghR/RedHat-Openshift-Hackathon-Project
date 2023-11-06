@@ -6,12 +6,12 @@ spec:
   template:
     spec:
       containers:
-        - image: quay.io/coder_bhai/gateway:latest
+        - image: {{ .Values.gateway.image }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.gateway.PORT }}
           env:
             - name: DATABASE_URL
-              value: postgresql://postgres:mypassword@postgresql:5432/openshiftdb
+              value: {{ .Values.postgres.URL }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

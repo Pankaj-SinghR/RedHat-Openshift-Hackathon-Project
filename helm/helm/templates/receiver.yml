@@ -26,4 +26,29 @@ spec:
             value: {{ .Values.receiver.environment.KAFKA_TOPIC }}
           - name: PORT
             value: "{{ .Values.receiver.port }}"
-        
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: receiver
+spec:
+  to:
+    kind: Service
+    name: receiver
+  port:
+    targetPort: "{{ .Values.receiver.port }}"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: receiver
+spec:
+  selector:
+    app: receiver
+  ports:
+    - name: http
+      port: {{ .Values.receiver.port }}
+      targetPort: {{ .Values.receiver.port }}
+  type: ClusterIP
