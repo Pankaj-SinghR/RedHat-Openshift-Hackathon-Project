@@ -1,16 +1,13 @@
 const WebSocket = require("ws");
 const { v4 } = require('uuid');
 
-const URL = 'ws://receiver-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/ws';
+// const URL = 'ws://receiver-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/ws';
+const URL = 'ws://localhost:8080/ws';
 let ws;
 let isConnected = false;
 
 function main() {
-<<<<<<< HEAD
     let obuIDS = generateOBUIDS(50);
-=======
-    let obuIDS = generateOBUIDS(1);
->>>>>>> 75206f3 (Changed something)
 
     ws = new WebSocket(URL);
 

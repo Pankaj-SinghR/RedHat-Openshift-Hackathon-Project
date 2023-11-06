@@ -114,7 +114,6 @@ const VechileDialog = ({ open, setOpen, rowData }) => {
         </DialogContent>
         {rowData && (
           <>
-            {" "}
             <div style={{ paddingLeft: 20 }}>
               <strong>Vehicle ID:</strong> {rowData.obu_id}
             </div>
@@ -132,11 +131,11 @@ const VechileDialog = ({ open, setOpen, rowData }) => {
                 <strong>Ending Longitude:</strong> {rowData.dest_long}
               </div>
               <div>
-                <strong>Created At:</strong> {getTime(rowData.created_at)}
+                <strong>Starting Time:</strong> {getTime(rowData.created_at)}
               </div>
 
               <div>
-                <strong>Updated At:</strong> {getTime(rowData.updated_at)}
+                <strong>Destination Time:</strong> {getTime(rowData.updated_at)}
               </div>
               <div>
                 <strong>Total Distance Covered: </strong>
