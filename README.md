@@ -27,9 +27,7 @@ The **Toll Microservice** is a comprehensive solution designed to efficiently ma
 5. **Gateway Microservice**:
    - Offers a user-friendly interface and APIs for tracking OBU devices, viewing locations, distances, and toll costs.
    - **Tools & Technology**: Custom serverless microservice, Knative, React JS
-
-
-
+---
 ```mermaid
 stateDiagram
     OBUDevice1 --> OBUReceiver: (lat, long, obuId)
@@ -48,9 +46,7 @@ stateDiagram
     User --> Serverless_Backend_and_UI(gateway)
     Serverless_Backend_and_UI(gateway) --> User
 ```
-
-
-   
+---
 ## Problem Solving
 1. **Automated Toll Calculation**: The system automates the calculation of toll costs based on the distance covered by vehicles. This eliminates manual toll calculations, reducing the risk of errors and ensuring accurate billing.
 2. **Real-time Tracking**: The microservice allows for real-time tracking of OBU-equipped vehicles, providing location updates and toll costs to users. This ensures transparency and improves fleet management.
@@ -58,36 +54,39 @@ stateDiagram
 4. **Efficient Data Processing**: By utilizing Kafka for event-driven processing, the system efficiently processes location data, calculates distances, and computes toll costs, ensuring low-latency responses.
 5. **User-Friendly Interface**: The Gateway Microservice provides a user interface and APIs that allow users to view OBU device locations, distances traveled, and toll costs in a simple and intuitive manner.
 
+---
+## Instructions for Deployment of microservice
+### Prerequisite
+1. ##### Should have redhat developer account for openshift
+2. ##### Should have following tools installed in local machine
+   - **oc cli** (openshift command line interface) to interact with openshift cluster
+   - **helm cli** to deploy all microservice using helm chart
+   - **docker and docker-compose** (if wants to run all microservice in local environment only)
 
 ## Setting up the Project in Openshift cluster using helm chart
 
 To set up the Toll Microservice project, follow these steps:
 
-1. Clone the repository.
+1. Clone the repository and list the directory.
+```bash
+   git clone https://github.com/Pankaj-SinghR/RedHat-Openshift-Hackathon-Project && cd RedHat-Openshift-Hackathon-Project && ls -l
+```
+- Output
+```bash
+total 12
+-rwxrwxrwx 1 dev dev 1069 Nov  6 22:08 LICENSE
+-rwxrwxrwx 1 dev dev 4963 Nov  6 22:08 README.md
+drwxrwxrwx 1 dev dev 4096 Nov  6 22:08 helm
+drwxrwxrwx 1 dev dev 4096 Nov  6 22:08 toll_microservice
+```
 
-   ```bash
-   git clone https://github.com/Pankaj-SinghR/RedHat-Openshift-Hackathon-Project
-   ```
-
-2. Install the necessary dependencies.
-
-   ```bash
-   cd toll_microservice
-   ```
-
-   ```bash
-   cd ..
-   cd obu
-   npm install
-   ```
-
-3. Run the microservices locally for development.
+4. Run the microservices locally for development.
 
    ```bash
    docker-compose up --build -d
    ```
 
-4. Run the frontend
+5. Run the frontend
 
    ```bash
    cd frontend
