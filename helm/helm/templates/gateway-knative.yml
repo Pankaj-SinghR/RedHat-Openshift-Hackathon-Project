@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: gateway
+spec:
+  template:
+    spec:
+      containers:
+        - image: quay.io/coder_bhai/gateway:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: postgresql://postgres:mypassword@postgresql:5432/openshiftdb
