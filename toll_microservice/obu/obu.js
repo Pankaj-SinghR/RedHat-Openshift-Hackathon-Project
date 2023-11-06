@@ -1,12 +1,14 @@
 const WebSocket = require("ws");
 const { v4 } = require('uuid');
+const yargs = require('yargs');
 
-const URL = 'ws://receiver-coder-bhai-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/ws';
+const URL = yargs.argv.url || 'ws://localhost:8080/ws';
+const numObuDevices = yargs.argv.obu || 20;
 let ws;
 let isConnected = false;
 
 function main() {
-    let obuIDS = generateOBUIDS(20);
+    let obuIDS = generateOBUIDS(numObuDevices);
 
     ws = new WebSocket(URL);
 
