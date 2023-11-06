@@ -6,7 +6,6 @@ spec:
   to:
     kind: Service
     name: receiver
-    weight: 100
   port:
     targetPort: 8080
-  websocket: true  # Enable WebSocket support
+  websocket: true  

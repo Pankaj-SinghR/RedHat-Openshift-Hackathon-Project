@@ -15,7 +15,7 @@ kafka:
 
 receiver:
   image: quay.io/coder_bhai/receiver
-  port: 8081
+  port: 8080
   environment:
     KAFKA_CLIENT_ID: obu-producer
     KAFKA_BROKERS: kafka:9092
