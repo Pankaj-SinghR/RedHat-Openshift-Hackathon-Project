@@ -24,6 +24,6 @@ spec:
             value: {{ .Values.receiver.environment.KAFKA_BROKERS }} 
           - name: KAFKA_TOPIC
             value: {{ .Values.receiver.environment.KAFKA_TOPIC }}
-          - name: WS_PORT
+          - name: PORT
             value: "{{ .Values.receiver.port }}"
         
