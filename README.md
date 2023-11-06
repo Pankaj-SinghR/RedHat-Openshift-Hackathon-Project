@@ -215,7 +215,7 @@ To set up the Toll Microservice project, follow these steps:
       Creating toll_microservice_distance_calculator_1 ... done
       Creating toll_microservice_receiver_1            ... done
    ```
-5. **use step 6 of helm deployment to publish data to localhost:8080 OBU receiver server**
+5. **use step 6 of helm deployment to publish data to localhost:8080 OBU receiver**
    ```
    node obu.js
    ```
