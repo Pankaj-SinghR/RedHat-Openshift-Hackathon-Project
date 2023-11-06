@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+spec:
+  replicas: 1  # You can adjust this based on your needs
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: {{ .Values.kafka.image }}
+        command: {{ .Values.kafka.command | toYaml | nindent 8 }}
+        ports:
+          - containerPort: 9092
+        env:
+          - name: LOG_DIR
+            value: {{ .Values.kafka.environment.LOG_DIR }}
+          - name: KAFKA_ADVERTISED_LISTENERS
+            value: {{ .Values.kafka.environment.KAFKA_ADVERTISED_LISTENERS }}
+          - name: KAFKA_LISTENERS
+            value: {{ .Values.kafka.environment.KAFKA_LISTENERS }}
+          - name: KAFKA_ZOOKEEPER_CONNECT
+            value: {{ .Values.kafka.environment.KAFKA_ZOOKEEPER_CONNECT }}  
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+spec:
+  replicas: 1  # You can adjust this based on your needs
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - name: zookeeper
+        image: {{ .Values.zookeeper.image }}
+        command: ["sh", "-c", "bin/zookeeper-server-start.sh config/zookeeper.properties"]
+        ports:
+          - containerPort: 2181
+        env:
+          - name: LOG_DIR
+            value: {{ .Values.zookeeper.environment.LOG_DIR }}
+

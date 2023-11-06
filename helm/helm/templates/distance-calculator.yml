@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distance-calculator
+spec:
+  replicas: 1  # You can adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: distance-calculator
+  template:
+    metadata:
+      labels:
+        app: distance-calculator
+    spec:
+      containers:
+      - name: distance-calculator
+        image: quay.io/coder_bhai/distance_calculator
+        env:
+        - name: KAFKA_CLIENT_ID
+          value: obu-producer
+        - name: KAFKA_BROKERS
+          value: kafka:9092
+        - name: KAFKA_TOPIC
+          value: obu-topic
+        - name: GRPC_HOST
+          value: storer
+        - name: GRPC_PORT
+          value: "50051"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: distance-calculator
+spec:
+  selector:
+    app: distance-calculator
+  ports:
+  - protocol: TCP
+    port: 80  # Expose the appropriate port for your application
+    targetPort: 80  # Match the port your application is listening on
+

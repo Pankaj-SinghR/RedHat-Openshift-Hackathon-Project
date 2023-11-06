@@ -6,6 +6,8 @@ process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
 
 const topic = process.env.KAFKA_TOPIC || "obu-topic"
 const PORT = process.env.PORT || 8080
+// const topic = process.env.KAFKA_TOPIC
+// const PORT = process.env.PORT
 const wss = new WebSocketServer({ port: PORT });
 const kafka = new KafkaConfig();
 const emitter = new EventEmitter();

@@ -5,6 +5,8 @@ class KafkaConfig {
         this.Kafka = new Kafka({
             clientId: process.env.KAFKA_CLIENT_ID || 'obu-client',
             brokers: (process.env.KAFKA_BROKERS || 'localhost:9092').split(','),
+            // clientId: process.env.KAFKA_CLIENT_ID,
+            // brokers: (process.env.KAFKA_BROKERS).split(','),
         });
 
         this.producer = this.Kafka.producer();

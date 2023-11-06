@@ -43,13 +43,13 @@ server.addService(obuProto.ObuService.service, {
 });
 
 server.bindAsync(
-    `${GRPC_HOST}:${GRPC_PORT}`,
+    `0.0.0.0:${GRPC_PORT}`,
     grpc.ServerCredentials.createInsecure(),
     (error, port) => {
         if (error) {
             logger.error(`Storer Server failed to start: ${error}`);
         } else {
-            logger.info(`Storer Server running at http://${GRPC_HOST}:${GRPC_PORT}`);
+            logger.info(`Storer Server running at ${GRPC_PORT}`);
             server.start();
         }
     }
