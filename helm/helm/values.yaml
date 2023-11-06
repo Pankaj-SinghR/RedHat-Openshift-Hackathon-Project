@@ -1,12 +1,18 @@
 zookeeper:
   image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
-  command: ["sh", "-c", "bin/zookeeper-server-start.sh config/zookeeper.properties"]
+  command:
+    ["sh", "-c", "bin/zookeeper-server-start.sh config/zookeeper.properties"]
   environment:
     LOG_DIR: /tmp/logs
 
 kafka:
   image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
-  command: ["sh", "-c", "bin/kafka-server-start.sh config/server.properties --override listeners=$${KAFKA_LISTENERS} --override advertised.listeners=$${KAFKA_ADVERTISED_LISTENERS} --override zookeeper.connect=$${KAFKA_ZOOKEEPER_CONNECT}"]
+  command:
+    [
+      "sh",
+      "-c",
+      "bin/kafka-server-start.sh config/server.properties --override listeners=$${KAFKA_LISTENERS} --override advertised.listeners=$${KAFKA_ADVERTISED_LISTENERS} --override zookeeper.connect=$${KAFKA_ZOOKEEPER_CONNECT}",
+    ]
   environment:
     LOG_DIR: "/tmp/logs"
     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
@@ -20,3 +26,18 @@ receiver:
     KAFKA_CLIENT_ID: obu-producer
     KAFKA_BROKERS: kafka:9092
     KAFKA_TOPIC: obu-topic
+
+postgres:
+  URL: postgresql://postgres:mypassword@postgresql:5432/openshiftdb
+
+storer:
+  image: quay.io/coder_bhai/storer:latest
+  GRPC_PORT: 50051
+  GRPC_HOST: storer
+
+gateway:
+  image: quay.io/coder_bhai/gateway:latest
+  PORT: 8080
+
+distanceCalculator:
+  image: quay.io/coder_bhai/distance_calculator

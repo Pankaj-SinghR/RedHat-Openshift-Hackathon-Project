@@ -3,9 +3,9 @@ const cors = require("cors")
 const http = require("http");
 const router = require("./router.js");
 const logger = require("./logger.js")
-
+require('dotenv').config();
 const app = express();
-const PORT = 8081
+const PORT = process.env.PORT || 8080
 const httpServer = http.createServer(app);
 
 app.use((req, res, next) => {

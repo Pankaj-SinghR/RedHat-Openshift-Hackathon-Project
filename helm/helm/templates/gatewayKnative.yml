@@ -1,0 +1,22 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: gateway
+spec:
+  template:
+    spec:
+      containers:
+        - image: {{ .Values.gateway.image }}
+          ports:
+            - containerPort: {{ .Values.gateway.PORT }}
+          env:
+            - name: DATABASE_URL
+              value: {{ .Values.postgres.URL }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault

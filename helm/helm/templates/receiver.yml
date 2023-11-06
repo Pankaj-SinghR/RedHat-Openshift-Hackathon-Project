@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: receiver
 spec:
-  replicas: 1  # You can adjust this based on your needs
+  replicas: 1 # You can adjust this based on your needs
   selector:
     matchLabels:
       app: receiver
@@ -13,17 +13,42 @@ spec:
         app: receiver
     spec:
       containers:
-      - name: receiver
-        image: {{ .Values.receiver.image }}
-        ports:
-          - containerPort: {{ .Values.receiver.port }}
-        env:
-          - name: KAFKA_CLIENT_ID
-            value: {{ .Values.receiver.environment.KAFKA_CLIENT_ID }}
-          - name: KAFKA_BROKERS
-            value: {{ .Values.receiver.environment.KAFKA_BROKERS }} 
-          - name: KAFKA_TOPIC
-            value: {{ .Values.receiver.environment.KAFKA_TOPIC }}
-          - name: PORT
-            value: "{{ .Values.receiver.port }}"
-        
+        - name: receiver
+          image: { { .Values.receiver.image } }
+          ports:
+            - containerPort: { { .Values.receiver.port } }
+          env:
+            - name: KAFKA_CLIENT_ID
+              value: { { .Values.receiver.environment.KAFKA_CLIENT_ID } }
+            - name: KAFKA_BROKERS
+              value: { { .Values.receiver.environment.KAFKA_BROKERS } }
+            - name: KAFKA_TOPIC
+              value: { { .Values.receiver.environment.KAFKA_TOPIC } }
+            - name: PORT
+              value: "{{ .Values.receiver.port }}"
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: receiver
+spec:
+  to:
+    kind: Service
+    name: receiver
+  port:
+    targetPort: "{{ .Values.receiver.port }}"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: receiver
+spec:
+  selector:
+    app: receiver
+  ports:
+    - name: http
+      port: { { .Values.receiver.port } }
+      targetPort: { { .Values.receiver.port } }
+  type: ClusterIP

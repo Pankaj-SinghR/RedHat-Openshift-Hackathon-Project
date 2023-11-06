@@ -1,1 +1,5 @@
 2023-10-30T20:22:08.179Z [[32minfo[39m]: Storer Server running at http://localhost:50051
+2023-11-06T07:33:19.312Z [[31merror[39m]: Storer Server failed to start: Error: No address added out of total 1 resolved
+2023-11-06T07:33:50.506Z [[31merror[39m]: Storer Server failed to start: Error: No address added out of total 1 resolved
+2023-11-06T07:37:18.302Z [[31merror[39m]: Storer Server failed to start: Error: No address added out of total 1 resolved
+2023-11-06T07:38:33.074Z [[32minfo[39m]: Storer Server running at http://localhost:50051
