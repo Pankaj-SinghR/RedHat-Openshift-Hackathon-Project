@@ -2,52 +2,60 @@
 
 ## Toll Microservice
 
-![Project Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)
+![Project Status](https://img.shields.io/badge/status-complete-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## Project Overview
+## Project Overview & Architecture
+The **Toll Microservice** is a comprehensive solution designed to efficiently manage and calculate toll costs for vehicles equipped with **On-Board Units (OBU)** while providing **real-time tracking of their positions and toll expenses**. This microservice system streamlines the process from OBU data collection to toll calculation and presentation through a user-friendly interface.
 
-The Toll Microservice project is a part of the RedHat-Openshift-Hackathon-Project. It is designed to calculate distances and costs for vehicles equipped with On-Board Units (OBUs). This system comprises several microservices that work together in a distributed architecture to process vehicle data.
+1. **OBU Receiver Server**:
+   - Listens for location data from OBU devices and publishes it to the Kafka stream for further processing.
+   - **Tools & Technology**: Custom server, Kafka
 
-## Features
+2. **Kafka Stream**:
+   - Acts as an event stream for real-time data processing, facilitating the flow of location data.
+   - **Tools & Technology**: Apache Kafka
 
-- **Calculate Distance:** Determine the distance covered by a vehicle between two geographical points (start and destination) using latitude and longitude coordinates.
-- **Calculate Costs:** Calculate the cost of a journey based on the distance covered, using a predefined price.
-- **Event-Driven:** Utilizes Kafka, an event-based system, for real-time data processing and messaging.
+3. **Distance Calculator Microservice**:
+   - Calculates the distance covered by vehicles between location updates and communicates with the Storer Microservice for toll calculations.
+   - **Tools & Technology**: Custom microservice, gRPC
 
-## Architecture
+4. **Storer Microservice**:
+   - Receives distance data and OBU IDs, calculates toll costs, and stores the information in a PostgreSQL database.
+   - **Tools & Technology**: Custom microservice, PostgreSQL
 
-The Toll Microservice system is composed of the following microservices:
-
-1. **Receiver Microservice**: Accepts OBU ID, latitude, and longitude data and forwards it to the Kafka event stream.
-
-2. **Kafka**: Serves as an event-driven message queue for asynchronous data processing.
-
-3. **Distance Calculator Microservice**: Consumes data from Kafka, calculates the distance between start and destination points, and makes a GRPC call to a cost calculation microservice.
-
-4. **Cost Calculation Microservice**: Receives GRPC calls from the Distance Calculator Microservice and computes the cost based on the distance.
-
-5. **Database**: Stores the calculated data, including OBU ID, distance, and cost.
-
-The architecture ensures modularity and scalability in processing vehicle data efficiently.
-
-## System Flow
-
-The following state diagram illustrates the flow of the Toll Microservice project:
+5. **Gateway Microservice**:
+   - Offers a user-friendly interface and APIs for tracking OBU devices, viewing locations, distances, and toll costs.
+   - **Tools & Technology**: Custom serverless microservice, Knative, React JS
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Vehicle: Vehicle Data
-    Vehicle --> Receiver: Data from OBU
-    Receiver --> Kafka: Data Forwarded
-    Kafka --> Distance_Calculator: Event Triggered
-    Distance_Calculator --> Calculate_Cost: GRPC Call
-    Calculate_Cost --> Distance_Calculator: Cost Calculation
-    Calculate_Cost --> Database: Store Cost
-    Database --> [*]: Call from UI to database
-```
+stateDiagram
+    OBUDevice1 --> OBUReceiver: (lat, long, obuId)
+    OBUDevice2 --> OBUReceiver: (lat, long, obuId)
+    OBUDevice3 --> OBUReceiver: (lat, long, obuId)
+    ...OBUDevice(n) --> OBUReceiver: (lat, long, obuId)
 
-## Setting up the Project
+    OBUReceiver --> Kafka
+    DistanceCalculator --> Kafka: Reads from Kafka, calculates distance & sends it to Storer
+    DistanceCalculator --> Storer: gRPC call
+    Storer --> PostgreSQL: Calculates cost based on distance and stores in PostgreSQL
+
+    Serverless_Backend_and_UI(gateway) --> PostgreSQL: Uses Knative to make the microservice serverless
+    PostgreSQL --> Serverless_Backend_and_UI(gateway)
+
+    User --> Serverless_Backend_and_UI(gateway)
+    Serverless_Backend_and_UI(gateway) --> User
+```
+   
+## Problem Solving
+1. **Automated Toll Calculation**: The system automates the calculation of toll costs based on the distance covered by vehicles. This eliminates manual toll calculations, reducing the risk of errors and ensuring accurate billing.
+2. **Real-time Tracking**: The microservice allows for real-time tracking of OBU-equipped vehicles, providing location updates and toll costs to users. This ensures transparency and improves fleet management.
+3. **Scalability**: The use of serverless architecture with Knative for the Gateway Microservice ensures that the system can easily scale to handle a large number of OBU devices without the need for manual intervention.
+4. **Efficient Data Processing**: By utilizing Kafka for event-driven processing, the system efficiently processes location data, calculates distances, and computes toll costs, ensuring low-latency responses.
+5. **User-Friendly Interface**: The Gateway Microservice provides a user interface and APIs that allow users to view OBU device locations, distances traveled, and toll costs in a simple and intuitive manner.
+
+
+## Setting up the Project in Openshift cluster using helm chart
 
 To set up the Toll Microservice project, follow these steps:
 
