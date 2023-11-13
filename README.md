@@ -276,3 +276,36 @@ To set up the Toll Microservice project, follow these steps:
    ```
    node obu.js
    ```
+---
+## Uninstalling Microservices
+
+### 1. Uninstall Toll Microservice using Helm:
+
+Execute the following command to uninstall the Toll Microservice:
+
+```bash
+helm uninstall toll-microservice
+```
+### 2. Uninstall postgres Microservice using oc cli:
+a. **delete the postgres deployment**
+
+   ```
+   oc delete deploy postgresql
+   ```
+
+   - **output**
+
+   ```bash
+     deployment.apps "postgresql" deleted
+   ```
+b. **delete the postgres service**
+
+   ```
+   oc delete svc postgresql
+   ```
+
+   - **output**
+
+   ```bash
+     service "postgresql" deleted
+   ```
