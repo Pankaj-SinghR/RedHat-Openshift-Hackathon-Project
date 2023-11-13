@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# use this for docker-compose only to build and run
 if [ "$1" == "up" ]; then
   docker-compose up --build -d
   docker-compose logs -f gateway receiver storer

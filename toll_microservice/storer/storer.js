@@ -7,7 +7,7 @@ const logger = require("./logger"); // Import the logger
 const GRPC_HOST = process.env.GRPC_HOST || 'localhost'
 const GRPC_PORT = process.env.GRPC_PORT || 50051
 
-const basePrice = 0.0015; // $1.5 per km charge
+const basePrice = 0.015; // $0.015 per meter charge
 
 const options = {
     keepCase: true,
